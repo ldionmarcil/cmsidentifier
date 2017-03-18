@@ -2,3 +2,5 @@
 *~
 # Ignore compiled python
 *.pyc
+__pycache__/
+*.egg-info/
