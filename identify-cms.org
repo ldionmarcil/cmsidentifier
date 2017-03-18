@@ -1,0 +1,21 @@
+* AEM (Adobe Experience Manager)
+  site.tld/content/
+  site.tld/etc/
+** Notes
+   http://www.kernelpicnic.net/2016/07/24/Microsoft-signout.live.com-Remote-Code-Execution-Write-Up.html
+   http://cq-ops.tumblr.com/post/21045033313/frequently-used-cq-urls
+* Kentico
+  /CMSPages/GetCSS.aspx
+  /CMSscripts
+* Oracle Portal CMS
+  portal/page?_pageid=.*,.*&_dad=portal&_schema=PORTAL
+  Ville de montréal
+  http://www.oracle.com/technetwork/middleware/portal/content-management-10g1014-097670.html
+* IBM WebSphere Commerce
+  /wcsstore/
+* OpenCart
+** Nutrizoo.com  
+  /catalog/view/theme
+* Craft CMS
+** gnd2018.com
+   name="CRAFT_CSRF_TOKEN"
