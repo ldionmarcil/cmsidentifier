@@ -1,6 +1,7 @@
 import os
 import pdb
 import argparse
+from scan import *
 from rule import *
 
 def run():
@@ -19,10 +20,19 @@ def run():
 
     rule_files = load_rules(RULE_FOLDER + "/*.yml")
 
-    pdb.set_trace()
+
+
+    # Every rule file gets a scan
     for rules in rule_files:
-        for rule in rules:
-            print(rule)
+        scan = Scan(rules=rules, target=arguments.url, report=arguments.output)
+
+        # Rules returned a match
+        if scan.match == True:
+
+            #Generate report
+            scan.generate_report()
+            
+    
 
 if __name__ == '__main__':
     run()

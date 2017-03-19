@@ -2,15 +2,12 @@ import yaml
 import glob
 import pdb
 
-class Rule(yaml.YAMLObject):
-    yaml_tag = u'!Rule'
+class Info(yaml.YAMLObject):
+    yaml_tag = u'!Info'
 
     def __init__(self, name):
         self.name = name
         
-    def execute(self):
-        pass
-
 class Passive(yaml.YAMLObject):
     yaml_tag = u'!Passive'
 
@@ -22,8 +19,11 @@ class Active(yaml.YAMLObject):
 
     def __init__(self, test):
         self.test = test
-            
-    
+
+    def execute(self):
+        pass
+
+
 def load_rule(file):
     return yaml.load_all(open(file,'r'))
 

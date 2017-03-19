@@ -1,4 +1,4 @@
---- !Rule
+--- !Info
 name: Wordpress
 website: https://wordpress.com/
 foo: 12
@@ -7,3 +7,8 @@ regexes:
 - a
 - b
 --- !Active
+entries:
+  - path: /readme.html
+    regex: <br />[0-9]\.[0-9]+\r\n
+  - path: /lisence.txt
+    regex: WordPress
