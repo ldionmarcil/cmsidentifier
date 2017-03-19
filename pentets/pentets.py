@@ -17,11 +17,12 @@ def run():
     else:
         RULE_FOLDER = os.path.dirname(os.path.realpath(__file__)) + "/../rules"
 
-    rules = load_rules(RULE_FOLDER + "/*.yml")
+    rule_files = load_rules(RULE_FOLDER + "/*.yml")
 
-    for rule in rules:
-        print("Executing rule %s" % (rule.name))
-        rule.execute()
+    pdb.set_trace()
+    for rules in rule_files:
+        for rule in rules:
+            print(rule)
 
 if __name__ == '__main__':
     run()
