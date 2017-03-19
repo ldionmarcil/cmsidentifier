@@ -1,2 +1,9 @@
 --- !Rule
-name: "wordpress"
+name: Wordpress
+website: https://wordpress.com/
+foo: 12
+--- !Passive
+regexes:
+- a
+- b
+--- !Active
