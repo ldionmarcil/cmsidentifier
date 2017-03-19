@@ -19,3 +19,6 @@
 * Craft CMS
 ** gnd2018.com
    name="CRAFT_CSRF_TOKEN"
+* Wordpress
+  /wp-content/
+  /wp-includes/
