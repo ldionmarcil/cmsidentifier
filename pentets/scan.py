@@ -11,7 +11,7 @@ class Scan():
 
     matches = []
     
-    def __init__(self, target, rules):
+    def __init__(self, target, rules, active):
         # Extract scan options to self
         self.target = target
 
@@ -19,10 +19,20 @@ class Scan():
 
         for ruledata in rules:
             ruleset = Ruleset(self, ruledata)
-            ruleset.execute()
-            
-        
+            ruleset.launch_passive()
 
+            # Passive rules are a match
+            if ruleset.match:
+                logging.info("Match for %s (%s)" % (ruleset.info.name, ruleset.info.website))
+
+                # If active rules are needed
+                if active:
+                    logging.debug("Passive rules matched and active rules flag present")
+                    ruleset.launch_active()
+
+                # Passive rule match, don't bother with other rules
+                break
+        
     def perform(self):
         pdb.set_trace()
         logging.info('Starting rule "%s"' %(self.info.name))

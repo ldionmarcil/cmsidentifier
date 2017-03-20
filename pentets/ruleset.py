@@ -1,19 +1,30 @@
 import re
+import network
 import logging
 from documents import Passive, Active, Info
 
 class Ruleset():
+    # By default nothing matches
+    match = False
+
     def __init__(self, scan, ruleset):
         self.scan=scan
         self.unpack_documents(ruleset)
 
-    def execute(self):
+    def launch_passive(self):
+        logging.debug("Launching passive rules for %s" % self.info.name)
         for heuristic in self.passive_rules:
-            match = re.search(heuristic, self.scan.plaintext)
-            if match:
-                logging.info("Match found for %s (%s)!" % (self.info.name, self.info.website))
+            if re.search(heuristic, self.scan.plaintext):
+                self.match = True
 
-        
+    def launch_active(self):
+        logging.debug("Launching active rules for %s" % self.info.name)
+        for rule in self.active_rules:
+            plaintext = str(network.request(self.scan.target + rule['path']))
+            if re.search(rule['regex'], plaintext):
+                logging.debug("Active rule match")
+            
+
     def unpack_documents(self, ruleset):
         logging.debug('Unpacking YAML documents')
         for document in ruleset:

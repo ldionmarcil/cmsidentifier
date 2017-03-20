@@ -11,6 +11,7 @@ def run():
     parser.add_argument('-u', '--url', metavar="URL", help="Root URL to scan", required=True)
     parser.add_argument('-f', '--cms-family', metavar="FAMILY", help="The family of the CMS to scan for")
     parser.add_argument('-o', '--output', nargs=1, type=str, metavar="URL", help="The path to the report to produce, if desired")
+    parser.add_argument('-a', '--active', action="store_true", help="Trigger active rules if passive rules are a match")
     parser.add_argument('-r', '--rules', nargs=1, type=str, metavar="DIRECTORY", help="The path to the directory where rules reside")
     arguments = parser.parse_args()
 
@@ -23,8 +24,7 @@ def run():
     logging.debug("Loading rule data")
     rule_files = load_documents(RULE_FOLDER + "/*.yml")
 
-    
-    scan = Scan(target=arguments.url, rules=rule_files)
+    scan = Scan(target=arguments.url, rules=rule_files, active=arguments.active)
     scan.generate_report()
             
     
