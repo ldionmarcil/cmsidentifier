@@ -1,11 +1,10 @@
 --- !Info
 name: Wordpress
 website: https://wordpress.com/
-foo: 12
 --- !Passive
 regexes:
-- a
-- b
+- /wp-content/
+- /wp-includes/
 --- !Active
 entries:
   - path: /readme.html

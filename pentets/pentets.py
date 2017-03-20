@@ -1,8 +1,10 @@
+import network
+import logging
 import os
 import pdb
 import argparse
 from scan import *
-from rule import *
+from documents import *
 
 def run():
     parser = argparse.ArgumentParser()
@@ -18,21 +20,16 @@ def run():
     else:
         RULE_FOLDER = os.path.dirname(os.path.realpath(__file__)) + "/../rules"
 
-    rule_files = load_rules(RULE_FOLDER + "/*.yml")
+    logging.debug("Loading rule data")
+    rule_files = load_documents(RULE_FOLDER + "/*.yml")
 
-
-
-    # Every rule file gets a scan
-    for rules in rule_files:
-        scan = Scan(rules=rules, target=arguments.url, report=arguments.output)
-
-        # Rules returned a match
-        if scan.match == True:
-
-            #Generate report
-            scan.generate_report()
+    
+    scan = Scan(target=arguments.url, rules=rule_files)
+    scan.generate_report()
             
     
 
 if __name__ == '__main__':
+    logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s",
+                        level=logging.DEBUG)
     run()
