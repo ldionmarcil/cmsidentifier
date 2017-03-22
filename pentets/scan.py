@@ -1,3 +1,4 @@
+from helper import *
 import network
 import logging
 from documents import Passive, Active, Info
@@ -13,7 +14,7 @@ class Scan():
     
     def __init__(self, target, rules, active):
         # Extract scan options to self
-        self.target = target
+        self.target = clean_url(target)
 
         self.plaintext = str(network.request(target))
 
