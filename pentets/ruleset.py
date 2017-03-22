@@ -21,8 +21,19 @@ class Ruleset():
         logging.debug("Launching active rules for %s" % self.info.name)
         for rule in self.active_rules:
             plaintext = str(network.request(self.scan.target + rule['path']))
-            if re.search(rule['regex'], plaintext):
-                logging.debug("Active rule match")
+
+            matches = re.search(rule['regex'], plaintext)
+
+            # Pattern matched
+            if matches:
+                logging.info("Active %s match" % rule['path'])
+
+                # if group matching: data extraction
+                if len(matches.groups()) > 0:
+                    logging.debug("Dumping extracted...:")
+
+                    for match in matches.groups():
+                        logging.info("Exracted: %s" % match)
             
 
     def unpack_documents(self, ruleset):
