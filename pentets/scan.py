@@ -11,13 +11,14 @@ class Scan():
     active_rules = Active()
 
     matches = []
-    
-    def __init__(self, target, rules, active):
+
+    def __init__(self, target, rules, user_agent, active):
         logging.info("Scanning {}".format(target))
         # Extract scan options to self
         self.target = clean_url(target)
+        self.user_agent = user_agent
 
-        self.plaintext = str(network.request(target))
+        self.plaintext = str(network.request(target, self.user_agent))
 
         for ruledata in rules:
             ruleset = Ruleset(self, ruledata)
@@ -25,7 +26,7 @@ class Scan():
 
             # Passive rules are a match
             if ruleset.passive_match():
-                
+
                 logging.info("Passive match for \x1b[31m{}\033[0m ({})".format(ruleset.info.name, ruleset.info.website))
                 logging.info("Resources: {}\n".format(ruleset.info.resources))
                 # If active rules are needed
@@ -34,7 +35,7 @@ class Scan():
 
                 # Passive rule match, don't bother with other rules
                 break
-        
+
     def perform(self):
         pdb.set_trace()
         logging.info('Starting rule "{}"'.format(self.info.name))

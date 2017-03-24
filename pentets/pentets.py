@@ -24,6 +24,10 @@ def run():
     parser.add_argument('-r', '--rules',
                         nargs=1, type=str, metavar="DIRECTORY",
                         help="The path to the directory where rules reside")
+    parser.add_argument('-U', '--user-agent',
+                        nargs=1, type=str, metavar="USER AGENT",
+                        default="test",
+                        help="Network requests will be made with this User-Agent")
     parser.add_argument('-v', '--version',
                         action="version",
                         version='PentETS {version}'.format(version=__version__))
@@ -45,6 +49,7 @@ def run():
  
     scan = Scan(target=arguments.url,
                 rules=load_rules(RULE_FOLDER),
+                user_agent=arguments.user_agent,
                 active=arguments.active)
     
     scan.generate_report()

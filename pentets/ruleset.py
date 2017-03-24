@@ -1,7 +1,7 @@
 import re
 import network
 import logging
-from helpers import *  
+from helpers import *
 from documents import Passive, Active, Info
 
 class Ruleset():
@@ -25,7 +25,8 @@ class Ruleset():
     def launch_active(self):
         logging.debug("Launching active rules for {}".format(self.info.name))
         for rule in self.active_rules:
-            plaintext = str(network.request(self.scan.target + rule['path']))
+            plaintext = str(network.request(self.scan.target + rule['path'],
+                                            self.user_agent))
 
             matches = re.search(rule['regex'], plaintext)
 
@@ -42,7 +43,7 @@ class Ruleset():
                             logging.info("{} : {}".format(bold(rule['desc']), match))
                         else:
                             logging.info("Extracted data : {}".format(match))
-            
+
 
     def unpack_documents(self, ruleset):
         logging.debug('Unpacking YAML documents')
