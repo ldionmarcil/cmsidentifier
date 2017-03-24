@@ -20,13 +20,14 @@ class Ruleset():
         logging.debug("Launching passive rules for {}".format(self.info.name))
         for heuristic in self.passive_rules:
             if re.search(heuristic, self.scan.plaintext):
+                logging.debug("Match on {}".format(heuristic))
                 self.passive_matches.append(heuristic)
 
     def launch_active(self):
         logging.debug("Launching active rules for {}".format(self.info.name))
         for rule in self.active_rules:
             plaintext = str(network.request(self.scan.target + rule['path'],
-                                            self.user_agent))
+                                            self.scan.user_agent))
 
             matches = re.search(rule['regex'], plaintext)
 
