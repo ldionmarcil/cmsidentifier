@@ -31,6 +31,9 @@ def run():
     parser.add_argument('-v', '--version',
                         action="version",
                         version='PentETS {version}'.format(version=__version__))
+    parser.add_argument('-p', '--proxy',
+                        type=str, metavar="PROXY", default="",
+                        help="Proxy in the format of proto://host:port")
     parser.add_argument('-V', '--verbose',
                         action="store_true",
                         help="Enable debugging output")
@@ -50,6 +53,7 @@ def run():
     scan = Scan(target=arguments.url,
                 rules=load_rules(RULE_FOLDER),
                 user_agent=arguments.user_agent,
+                proxy=arguments.proxy,
                 active=arguments.active)
     
     scan.generate_report()

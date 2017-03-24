@@ -27,7 +27,8 @@ class Ruleset():
         logging.debug("Launching active rules for {}".format(self.info.name))
         for rule in self.active_rules:
             plaintext = str(network.request(self.scan.target + rule['path'],
-                                            self.scan.user_agent))
+                                            self.scan.user_agent,
+                                            self.scan.proxy))
 
             matches = re.search(rule['regex'], plaintext)
 

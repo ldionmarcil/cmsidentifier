@@ -12,13 +12,15 @@ class Scan():
 
     matches = []
 
-    def __init__(self, target, rules, user_agent, active):
+    def __init__(self, target, rules, user_agent, active, proxy):
         logging.info("Scanning {}".format(target))
         # Extract scan options to self
         self.target = clean_url(target)
         self.user_agent = user_agent
 
-        self.plaintext = str(network.request(target, self.user_agent))
+        self.plaintext = str(network.request(target,
+                                             self.user_agent,
+                                             proxy))
 
         for ruledata in rules:
             ruleset = Ruleset(self, ruledata)

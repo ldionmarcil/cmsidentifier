@@ -1,0 +1,8 @@
+--- !Info
+name: Tor
+website: https://www.torproject.org/
+resources: 
+--- !Passive
+regexes:
+- Congratulations
+
