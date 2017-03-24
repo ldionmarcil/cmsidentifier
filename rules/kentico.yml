@@ -1,6 +1,7 @@
 --- !Info
 name: Kentico
 website: http://www.kentico.com/
+resources: 
 --- !Passive
 regexes:
 - /CMSPages/GetCSS.aspx
