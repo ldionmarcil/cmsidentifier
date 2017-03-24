@@ -25,7 +25,7 @@ def run():
                         nargs=1, type=str, metavar="DIRECTORY",
                         help="The path to the directory where rules reside")
     parser.add_argument('-U', '--user-agent',
-                        nargs=1, type=str, metavar="USER AGENT",
+                        type=str, metavar="USER AGENT",
                         default="Mozilla/5.0 (Windows NT 5.1; rv:5.0.1) Gecko/20100101 Firefox/5.0.1",
                         help="Network requests will be made with this User-Agent")
     parser.add_argument('-v', '--version',
