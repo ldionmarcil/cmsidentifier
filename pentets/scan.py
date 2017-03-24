@@ -1,8 +1,8 @@
-from helper import *
 import network
 import logging
 from documents import Passive, Active, Info
 from ruleset import *
+from helpers import *
 import pdb
 
 
@@ -13,6 +13,7 @@ class Scan():
     matches = []
     
     def __init__(self, target, rules, active):
+        logging.info("Scanning {}".format(target))
         # Extract scan options to self
         self.target = clean_url(target)
 
@@ -23,12 +24,12 @@ class Scan():
             ruleset.launch_passive()
 
             # Passive rules are a match
-            if ruleset.match:
-                logging.info("Match for %s (%s)" % (ruleset.info.name, ruleset.info.website))
-
+            if ruleset.passive_match():
+                
+                logging.info("Passive match for \x1b[31m{}\033[0m ({})".format(ruleset.info.name, ruleset.info.website))
+                logging.info("Resources: {}\n".format(ruleset.info.resources))
                 # If active rules are needed
                 if active:
-                    logging.debug("Passive rules matched and active rules flag present")
                     ruleset.launch_active()
 
                 # Passive rule match, don't bother with other rules
@@ -36,10 +37,10 @@ class Scan():
         
     def perform(self):
         pdb.set_trace()
-        logging.info('Starting rule "%s"' %(self.info.name))
+        logging.info('Starting rule "{}"'.format(self.info.name))
         logging.info('Heuristics loaded')
-        logging.info(' - %d passive rules' % self.passive_rules.count())
-        logging.info(' - %d active rules' % self.active_rules.count())
+        logging.info(' - {} passive rules'.format(self.passive_rules.count()))
+        logging.info(' - {} active rules'.format(self.active_rules.count()))
 
 
 

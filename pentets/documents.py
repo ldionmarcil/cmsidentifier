@@ -5,8 +5,8 @@ import pdb
 class Info(yaml.YAMLObject):
     yaml_tag = u'!Info'
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
+        pass
         
 class Passive(yaml.YAMLObject):
     yaml_tag = u'!Passive'
