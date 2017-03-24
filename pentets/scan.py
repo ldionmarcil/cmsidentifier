@@ -36,14 +36,5 @@ class Scan():
                 # Passive rule match, don't bother with other rules
                 break
 
-    def perform(self):
-        pdb.set_trace()
-        logging.info('Starting rule "{}"'.format(self.info.name))
-        logging.info('Heuristics loaded')
-        logging.info(' - {} passive rules'.format(self.passive_rules.count()))
-        logging.info(' - {} active rules'.format(self.active_rules.count()))
-
-
-
     def generate_report(self):
         pass
