@@ -1,0 +1,8 @@
+--- !Info
+name: IBM WebSphere Commerce
+website: http://www-01.ibm.com/software/genservers/commerceproductline/
+resources: 
+--- !Passive
+regexes:
+- /wcsstore/
+- /webapp/wcs/

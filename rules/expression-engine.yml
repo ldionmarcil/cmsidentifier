@@ -1,0 +1,8 @@
+--- !Info
+name: Expression Engine
+website: https://www.exp-resso.com/
+resources: 
+--- !Passive
+regexes:
+- ExpressoStore.config
+- ExpressoStore.products
