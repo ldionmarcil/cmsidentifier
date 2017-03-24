@@ -1,0 +1,8 @@
+--- !Info
+name: Adobe Experience Manager
+website: https://docs.adobe.com/content/docs/en/aem/6-2.html
+resources: http://www.kernelpicnic.net/2016/07/24/Microsoft-signout.live.com-Remote-Code-Execution-Write-Up.html
+--- !Passive
+regexes:
+- /content/dam/
+- /etc/designs/

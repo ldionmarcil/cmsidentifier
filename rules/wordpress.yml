@@ -1,6 +1,7 @@
 --- !Info
 name: Wordpress
 website: https://wordpress.com/
+resources: https://wpscan.org/
 --- !Passive
 regexes:
 - /wp-content/
@@ -8,6 +9,8 @@ regexes:
 --- !Active
 entries:
   - path: /readme.html
-    regex: <br /> Version ([0-9.]+)    
+    desc: Wordpress Version
+    regex: <br /> Version ([0-9.]+)
   - path: /license.txt
+    desc: Possible update/setup date
     regex: (Copyright [0-9\-]+ by the contributors)
