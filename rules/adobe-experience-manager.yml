@@ -6,3 +6,8 @@ resources: http://www.kernelpicnic.net/2016/07/24/Microsoft-signout.live.com-Rem
 regexes:
 - /content/dam/
 - /etc/designs/
+--- !Active
+entries:
+  - path: /libs/cq/core/content/login.html?.css
+    regex: login/login.css
+    info: Glob expansion vulnerability (CVE-2016-0957)
