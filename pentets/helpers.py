@@ -1,4 +1,4 @@
-from documents import *
+from pentets.documents import *
 import logging
 
 def clean_url(url):
@@ -8,13 +8,9 @@ def clean_url(url):
     return url
 
 def load_rules(path):
-
     logging.debug("Loading rule data")
-
     rule_files = load_documents(path + "/*.yml")
-
     return rule_files
-    
-    
+
 def bold(str):
     return "\033[1m{}\033[0m".format(str)

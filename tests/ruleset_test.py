@@ -12,6 +12,3 @@ class RulesetTest(unittest.TestCase):
 
     def test_unpack_documents(self):
         pass
-
-if __name__ == '__main__':
-    unittest.main()

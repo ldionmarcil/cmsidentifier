@@ -13,5 +13,6 @@ setup(
     install_requires=[
         'PyYAML>=3.12',
         'pycurl>=7.43',
+        'testfixtures>=4.13',
     ]
 )
