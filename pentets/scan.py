@@ -17,6 +17,7 @@ class Scan():
         # Extract scan options to self
         self.target = clean_url(target)
         self.user_agent = user_agent
+        self.proxy = proxy
 
         self.plaintext = str(network.request(target,
                                              self.user_agent,
