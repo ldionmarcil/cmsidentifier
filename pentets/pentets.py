@@ -23,6 +23,7 @@ def run():
                         help="Trigger active rules if passive rules are a match")
     parser.add_argument('-r', '--rules',
                         nargs=1, type=str, metavar="DIRECTORY",
+                        default=os.path.dirname(os.path.realpath(__file__)) + "/../rules",
                         help="The path to the directory where rules reside")
     parser.add_argument('-U', '--user-agent',
                         type=str, metavar="USER AGENT",
@@ -43,22 +44,13 @@ def run():
     logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s",
                         level=logging.DEBUG if arguments.verbose else logging.INFO)
 
-    if arguments.rules is not None:
-        # User-specified rules path
-        RULE_FOLDER = arguments.rules[0]
-    else:
-        # Default rules path
-        RULE_FOLDER = os.path.dirname(os.path.realpath(__file__)) + "/../rules"
- 
     scan = Scan(target=arguments.url,
-                rules=load_rules(RULE_FOLDER),
+                rules=load_rules(arguments.rules),
                 user_agent=arguments.user_agent,
                 proxy=arguments.proxy,
                 active=arguments.active)
-    
+
     scan.generate_report()
-
-
 
 if __name__ == '__main__':
     run()

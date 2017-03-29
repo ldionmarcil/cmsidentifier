@@ -1,4 +1,4 @@
-from pentets.documents import *
+from documents import *
 import logging
 
 def clean_url(url):

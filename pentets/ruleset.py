@@ -1,8 +1,8 @@
 import re
-import pentets.network
+import network
 import logging
-from pentets.helpers import *
-from pentets.documents import Passive, Active, Info
+from helpers import *
+from documents import Passive, Active, Info
 
 class Ruleset():
     # By default nothing matches
