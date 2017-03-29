@@ -39,7 +39,8 @@ class Active(yaml.YAMLObject):
         return len(self.entries)
 
 def load_document(file):
-    return yaml.load_all(open(file,'r'))
+    with open(file, 'r') as f:
+        return yaml.load_all(f)
 
 def load_documents(search_glob):
     return map(load_document, glob.glob(search_glob))

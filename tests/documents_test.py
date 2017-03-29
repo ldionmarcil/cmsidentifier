@@ -22,7 +22,6 @@ regexes:
 - /patate/i
 """)
 
-        self.assertEqual(["/yolo/", "/patate/i"], passive.regexes)
         self.assertEqual(2, passive.count())
         self.assertEqual(["/yolo/", "/patate/i"], list(passive))
 
@@ -38,16 +37,20 @@ entries:
     regex: <br /> Version ([0-9.]+)
 """)
 
-        # self.assertEqual("/readme.html", active[0].path)
-        # self.assertEqual("patatepress Version", active[0].desc)
-        # self.assertEqual("<br /> Version ([0-9.]+)", active[0].regex)
-        pass
+        self.assertEqual(1, active.count())
+        self.assertEqual([{
+            "path": "/readme.html",
+            "desc": "patatepress Version",
+            "regex": "<br /> Version ([0-9.]+)"
+        }], list(active))
 
     def test_active_defaults(self):
         self.assertEqual([], Active.entries)
 
-    def load_document(self):
-        pass
+    def test_load_document(self):
+        document = load_document("./tests/fixtures/document_1.yml")
+        self.assertEqual(3, len(list(document)))
 
-    def load_documents(self):
-        pass
+    def test_load_documents(self):
+        documents = load_documents("./tests/*/document_1.yml")
+        self.assertEqual(1, len(list(documents)))

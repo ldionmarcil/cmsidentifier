@@ -1,0 +1,16 @@
+--- !Info
+name: Testpress
+website: https://testpress.com/
+resources: https://testscan.org/
+--- !Passive
+regexes:
+- /test-content/
+- /test-includes/
+--- !Active
+entries:
+  - path: /readme.html
+    desc: Testpress Version
+    regex: <br /> Version ([0-9.]+)
+  - path: /license.txt
+    desc: Possible update/setup date
+    regex: (Copyright [0-9\-]+ by the contributors)
