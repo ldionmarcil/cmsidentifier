@@ -10,4 +10,8 @@ setup(
     description='CMS Spider',
     packages=['pentets', 'tests'],
     test_suite='tests',
+    install_requires=[
+        'PyYAML>=3.12',
+        'pycurl>=7.43',
+    ]
 )

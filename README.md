@@ -1,17 +1,11 @@
-# setup
+# LOG515 - PentÉTS
+
+## Installation
 
 ```sh
-# install python3 et pip
-pip install -r ./requirements.txt
-pip install setuptools
-```
+pip3 install setuptools
+python3 setup.py develop
 
-# yolo
-
-```sh
 # execution des tests
 python3 setup.py test
-
-# execution de l'app
-python3 pentets/pentets.py
 ```
