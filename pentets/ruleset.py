@@ -35,7 +35,8 @@ class Ruleset():
             # Pattern matched
             if matches:
                 logging.info("Active {} match".format(rule['path']))
-
+                if 'info' in rule:
+                    logging.info(" - {}".format(rule['info']))
                 # if group matching: data extraction
                 if len(matches.groups()) > 0:
                     logging.debug("Dumping extracted...:")
