@@ -1,10 +1,10 @@
-import network
 import logging
-from documents import Passive, Active, Info
-from ruleset import *
-from helpers import *
 import pdb
 
+from .network import *
+from .documents import Passive, Active, Info
+from .ruleset import *
+from .helpers import *
 
 class Scan():
     passive_rules = Passive()
@@ -18,10 +18,9 @@ class Scan():
         self.target = clean_url(target)
         self.user_agent = user_agent
         self.proxy = proxy
-
-        self.plaintext = str(network.request(target,
-                                             self.user_agent,
-                                             proxy))
+        self.plaintext = str(request(target,
+                                     self.user_agent,
+                                     proxy))
 
         for ruledata in rules:
             ruleset = Ruleset(self, ruledata)

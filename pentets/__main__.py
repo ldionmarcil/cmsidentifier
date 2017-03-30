@@ -1,11 +1,11 @@
-import network
 import logging
 import os
 import pdb
 import argparse
-from scan import *
-from helpers import *
-from version import __version__
+
+from .scan import *
+from .helpers import *
+from .version import __version__
 
 def run():
     parser = argparse.ArgumentParser()

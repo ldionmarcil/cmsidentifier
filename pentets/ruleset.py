@@ -1,8 +1,9 @@
 import re
-import network
 import logging
-from helpers import *
-from documents import Passive, Active, Info
+
+from .network import *
+from .helpers import *
+from .documents import Passive, Active, Info
 
 class Ruleset():
     # By default nothing matches
@@ -26,9 +27,9 @@ class Ruleset():
     def launch_active(self):
         logging.debug("Launching active rules for {}".format(self.info.name))
         for rule in self.active_rules:
-            plaintext = str(network.request(self.scan.target + rule['path'],
-                                            self.scan.user_agent,
-                                            self.scan.proxy))
+            plaintext = str(request(self.scan.target + rule['path'],
+                                    self.scan.user_agent,
+                                    self.scan.proxy))
 
             matches = re.search(rule['regex'], plaintext)
 

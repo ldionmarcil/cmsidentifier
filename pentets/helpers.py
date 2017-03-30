@@ -1,5 +1,6 @@
-from documents import *
 import logging
+
+from .documents import *
 
 def clean_url(url):
     # remove trailing slash
