@@ -49,9 +49,9 @@ entries:
         self.assertEqual([], Active.entries)
 
     def test_load_document(self):
-        document = load_document("./tests/fixtures/document_1.yml")
+        document = load_document("./tests/fixtures/fake.yml")
         self.assertEqual(3, len(list(document)))
 
     def test_load_documents(self):
-        documents = load_documents("./tests/*/document_1.yml")
+        documents = load_documents("./tests/*/fake.yml")
         self.assertEqual(1, len(list(documents)))

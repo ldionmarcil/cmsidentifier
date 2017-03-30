@@ -9,9 +9,9 @@ class Ruleset():
     # By default nothing matches
     passive_matches = []
 
-    def __init__(self, scan, ruleset):
-        self.scan=scan
-        self.unpack_documents(ruleset)
+    def __init__(self, scan, documents):
+        self.scan = scan
+        self.unpack_documents(documents)
 
     # Returns true if matches one or more passive rules
     def passive_match(self):
@@ -49,9 +49,9 @@ class Ruleset():
                             logging.info("Extracted data : {}".format(match))
 
 
-    def unpack_documents(self, ruleset):
+    def unpack_documents(self, documents):
         logging.debug('Unpacking YAML documents')
-        for document in ruleset:
+        for document in documents:
             # Extract rule information
             if type(document) is Info:
                 self.info = document

@@ -6,27 +6,19 @@ class MockedScan():
     pass
 
 class RulesetTest(unittest.TestCase):
+    def setUp(self):
+        self.documents = load_documents("./tests/fixtures/fake.yml")
+        self.ruleset = Ruleset(MockedScan(), self.documents)
+
     def test_passive_match(self):
-        pass
+        self.ruleset.passive_matches.append("patate")
+        self.assertEqual(True, self.ruleset.passive_match())
+
+    def test_has_no_passive_match(self):
+        self.assertEqual(False, self.ruleset.passive_match())
 
     def test_launch_passive(self):
         pass
 
     def test_launch_active(self):
         pass
-
-    @unittest.skip("seems like I can't code...")
-    def test_unpack_documents(self):
-        self.setup_document_ruleset()
-        self.assertEqual(1, self.ruleset.info)
-        self.assertEqual(1, self.ruleset.passive_rules)
-        self.assertEqual(1, self.ruleset.active_rules)
-
-    def test_unpack_documents_logs(self):
-        with LogCapture() as l:
-            self.setup_document_ruleset()
-            l.check(("root", "DEBUG", "Unpacking YAML documents"))
-
-    def setup_document_ruleset(self):
-        self.documents = load_documents("./tests/fixtures/document_1.yml")
-        self.ruleset = Ruleset(MockedScan(), self.documents)
