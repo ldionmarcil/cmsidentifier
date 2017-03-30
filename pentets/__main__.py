@@ -41,7 +41,7 @@ def run():
 
     arguments = parser.parse_args()
 
-    logging.basicConfig(format="[%(asctime)s %(levelname)s] %(message)s",
+    logging.basicConfig(format="[%(asctime)s %(levelname)-5s] %(message)s",
                         level=logging.DEBUG if arguments.verbose else logging.INFO)
 
     scan = Scan(target=arguments.url,
