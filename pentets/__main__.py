@@ -4,7 +4,6 @@ import pdb
 import argparse
 
 from .scan import *
-from .helpers import *
 from .version import __version__
 
 def run():
@@ -45,11 +44,11 @@ def run():
                         level=logging.DEBUG if arguments.verbose else logging.INFO)
 
     scan = Scan(target=arguments.url,
-                rules=load_rules(arguments.rules),
+                rules=arguments.rules,
                 user_agent=arguments.user_agent,
                 proxy=arguments.proxy,
                 active=arguments.active)
-
+    scan.process_rules()
     scan.generate_report()
 
 if __name__ == '__main__':

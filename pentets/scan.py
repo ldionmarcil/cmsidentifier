@@ -17,26 +17,28 @@ class Scan():
         # Extract scan options to self
         self.target = clean_url(target)
         self.user_agent = user_agent
+        self.active = active
         self.proxy = proxy
-        self.plaintext = str(request(target,
-                                     self.user_agent,
-                                     proxy))
+        self.rules = load_rules(rules)
+        self.plaintext = str(request(self.target, self.user_agent, self.proxy))
 
-        for ruledata in rules:
+    def process_rules(self):
+        for ruledata in self.rules:
             ruleset = Ruleset(self, ruledata)
             ruleset.launch_passive()
 
             # Passive rules are a match
             if ruleset.passive_match():
 
-                logging.info("Passive match for \x1b[31m{}\033[0m ({})".format(ruleset.info.name, ruleset.info.website))
+                logging.info("Passive match for {} ({})".format(red(ruleset.info.name), ruleset.info.website))
                 logging.info("Resources: {}\n".format(ruleset.info.resources))
                 # If active rules are needed
-                if active:
+                if self.active:
                     ruleset.launch_active()
 
                 # Passive rule match, don't bother with other rules
                 break
+
 
     def generate_report(self):
         pass

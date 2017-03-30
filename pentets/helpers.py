@@ -15,3 +15,6 @@ def load_rules(path):
 
 def bold(str):
     return "\033[1m{}\033[0m".format(str)
+
+def red(str):
+    return  "\x1b[31m{}\033[0m".format(str)

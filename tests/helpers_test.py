@@ -21,6 +21,12 @@ class HelpersTest(unittest.TestCase):
         # do something
         pass
 
+    def test_red_empty_string(self):
+        self.assertEqual("\x1b[31m\033[0m", red(""))
+
+    def test_red_string(self):
+        self.assertEqual("\x1b[31mpatate\033[0m", red("patate"))
+
     def test_bold_empty_string(self):
         self.assertEqual("\033[1m\033[0m", bold(""))
 
