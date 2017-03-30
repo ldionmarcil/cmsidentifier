@@ -8,6 +8,8 @@ from .documents import Passive, Active, Info
 class Ruleset():
     # By default nothing matches
     passive_matches = []
+    passive_rules = Passive()
+    active_rules = Active()
 
     def __init__(self, scan, documents):
         self.scan = scan

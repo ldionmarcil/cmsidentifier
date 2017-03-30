@@ -7,9 +7,6 @@ from .ruleset import *
 from .helpers import *
 
 class Scan():
-    passive_rules = Passive()
-    active_rules = Active()
-
     matches = []
 
     def __init__(self, target, rules, user_agent, active, proxy):
