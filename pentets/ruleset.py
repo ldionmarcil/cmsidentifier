@@ -1,16 +1,19 @@
 import re
-import network
 import logging
-from helpers import *
-from documents import Passive, Active, Info
+
+from .network import *
+from .helpers import *
+from .documents import Passive, Active, Info
 
 class Ruleset():
     # By default nothing matches
     passive_matches = []
+    passive_rules = Passive()
+    active_rules = Active()
 
-    def __init__(self, scan, ruleset):
-        self.scan=scan
-        self.unpack_documents(ruleset)
+    def __init__(self, scan, documents):
+        self.scan = scan
+        self.unpack_documents(documents)
 
     # Returns true if matches one or more passive rules
     def passive_match(self):
@@ -26,9 +29,9 @@ class Ruleset():
     def launch_active(self):
         logging.debug("Launching active rules for {}".format(self.info.name))
         for rule in self.active_rules:
-            plaintext = str(network.request(self.scan.target + rule['path'],
-                                            self.scan.user_agent,
-                                            self.scan.proxy))
+            plaintext = str(request(self.scan.target + rule['path'],
+                                    self.scan.user_agent,
+                                    self.scan.proxy))
 
             matches = re.search(rule['regex'], plaintext)
 
@@ -48,9 +51,9 @@ class Ruleset():
                             logging.info("Extracted data : {}".format(match))
 
 
-    def unpack_documents(self, ruleset):
+    def unpack_documents(self, documents):
         logging.debug('Unpacking YAML documents')
-        for document in ruleset:
+        for document in documents:
             # Extract rule information
             if type(document) is Info:
                 self.info = document
