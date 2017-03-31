@@ -7,6 +7,7 @@ from .scan import *
 from .version import __version__
 
 def run():
+    root_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', '--url',
                         metavar="URL", required=True,
@@ -22,7 +23,7 @@ def run():
                         help="Trigger active rules if passive rules are a match")
     parser.add_argument('-r', '--rules',
                         nargs=1, type=str, metavar="DIRECTORY",
-                        default=os.path.dirname(os.path.realpath(__file__)) + "/../rules",
+                        default=(root_path + "/rules"),
                         help="The path to the directory where rules reside")
     parser.add_argument('-U', '--user-agent',
                         type=str, metavar="USER AGENT",
@@ -37,6 +38,10 @@ def run():
     parser.add_argument('-V', '--verbose',
                         action="store_true",
                         help="Enable debugging output")
+    parser.add_argument('-l', '--layout',
+                        nargs=1, type=str, metavar="URL",
+                        help="The path of the layout used to generate the reports",
+                        default=(root_path + "/layouts/default.txt"))
 
     arguments = parser.parse_args()
 
