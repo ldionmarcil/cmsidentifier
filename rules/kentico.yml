@@ -1,8 +1,7 @@
---- !Info
+--- !Document
 name: Kentico
 website: http://www.kentico.com/
-resources: 
---- !Passive
-regexes:
-- /CMSPages/GetCSS.aspx
-- /CMSscripts
+resources:
+passive_rules:
+  - /CMSPages/GetCSS.aspx
+  - /CMSscripts

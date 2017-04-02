@@ -1,13 +1,11 @@
---- !Info
+--- !Document
 name: Testpress
 website: https://testpress.com/
 resources: https://testscan.org/
---- !Passive
-regexes:
-- /test-content/
-- /test-includes/
---- !Active
-entries:
+passive_rules:
+  - /test-content/
+  - /test-includes/
+active_rules:
   - path: /readme.html
     desc: Testpress Version
     regex: <br /> Version ([0-9.]+)

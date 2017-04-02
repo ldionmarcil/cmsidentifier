@@ -41,3 +41,6 @@ python3 -m pentets -u http://www.intel.ca -a
 # Kentico
 python3 -m pentets -u http://etsmtl.ca -a
 ```
+
+
+https://docs.python.org/3/library/concurrent.futures.html

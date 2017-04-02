@@ -1,13 +1,11 @@
---- !Info
+--- !Document
 name: Adobe Experience Manager
 website: https://docs.adobe.com/content/docs/en/aem/6-2.html
 resources: http://www.kernelpicnic.net/2016/07/24/Microsoft-signout.live.com-Remote-Code-Execution-Write-Up.html
---- !Passive
-regexes:
-- /content/dam/
-- /etc/designs/
---- !Active
-entries:
+passive_rules:
+  - /content/dam/
+  - /etc/designs/
+active_rules:
   - path: /libs/cq/core/content/login.html?.css
     regex: login/login.css
     info: Glob expansion vulnerability (CVE-2016-0957)
