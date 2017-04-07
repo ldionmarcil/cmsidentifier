@@ -1,8 +1,6 @@
---- !Info
+--- !Document
 name: Tor
 website: https://www.torproject.org/
-resources: 
---- !Passive
-regexes:
-- Congratulations
-
+resources:
+passive_rules:
+  - Congratulations

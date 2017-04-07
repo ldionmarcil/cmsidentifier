@@ -1,41 +1,38 @@
 import logging
 import pdb
 
-from .network import *
-from .documents import Passive, Active, Info
-from .ruleset import *
-from .helpers import *
+from .document import load_documents
+from .ruleset import Ruleset
+from .helpers import clean_url, red, bold
 
 class Scan():
-    matches = []
-
-    def __init__(self, target, rules, user_agent, active, proxy):
-        logging.info("Scanning {}".format(target))
-        # Extract scan options to self
-        self.target = clean_url(target)
-        self.user_agent = user_agent
+    def __init__(self, targets, rules_dir, curl_client, active=False, jobs=1):
+        self.targets = targets
+        self.rules_dir = rules_dir
+        self.curl_client = curl_client
         self.active = active
-        self.proxy = proxy
-        self.rules = load_rules(rules)
-        self.plaintext = str(request(self.target, self.user_agent, self.proxy))
+        self.jobs = jobs
 
-    def process_rules(self):
-        for ruledata in self.rules:
-            ruleset = Ruleset(self, ruledata)
-            ruleset.launch_passive()
+    def scan(self):
+        documents = load_documents(self.rules_dir)
+        # TODO: multi-targets
+        self.scan_target(clean_url(self.targets), documents)
 
-            # Passive rules are a match
-            if ruleset.passive_match():
+    def scan_target(self, target, documents):
+        if not documents:
+            documents = []
 
-                logging.info("Passive match for {} ({})".format(red(ruleset.info.name), ruleset.info.website))
-                logging.info("Resources: {}\n".format(ruleset.info.resources))
-                # If active rules are needed
+        plaintext = str(self.curl_client.request(target))
+
+        for document in documents:
+            ruleset = Ruleset(target, document)
+
+            if ruleset.launch_passive(plaintext):
                 if self.active:
-                    ruleset.launch_active()
+                    ruleset.launch_active(self.curl_client)
 
-                # Passive rule match, don't bother with other rules
+                # bail on first passive rule
                 break
-
 
     def generate_report(self):
         pass

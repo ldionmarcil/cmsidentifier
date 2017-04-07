@@ -1,13 +1,11 @@
---- !Info
+--- !Document
 name: Wordpress
 website: https://wordpress.com/
 resources: https://wpscan.org/
---- !Passive
-regexes:
-- /wp-content/
-- /wp-includes/
---- !Active
-entries:
+passive_rules:
+  - /wp-content/
+  - /wp-includes/
+active_rules:
   - path: /readme.html
     desc: Wordpress Version
     regex: <br /> Version ([0-9.]+)

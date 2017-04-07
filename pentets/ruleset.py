@@ -1,38 +1,41 @@
 import re
 import logging
+import pdb
 
-from .network import *
 from .helpers import *
-from .documents import Passive, Active, Info
 
 class Ruleset():
-    # By default nothing matches
-    passive_matches = []
-    passive_rules = Passive()
-    active_rules = Active()
+    def __init__(self, target, document):
+        self.target = target
+        self.document = document
+        self.passive_matches = []
+        self.active_matches = []
 
-    def __init__(self, scan, documents):
-        self.scan = scan
-        self.unpack_documents(documents)
-
-    # Returns true if matches one or more passive rules
     def passive_match(self):
-        return (len(self.passive_matches) > 0)
+        return len(self.passive_matches) > 0
 
-    def launch_passive(self):
-        logging.debug("Launching passive rules for {}".format(self.info.name))
-        for heuristic in self.passive_rules:
-            if re.search(heuristic, self.scan.plaintext):
-                logging.debug("Match on {}".format(heuristic))
+    def active_match(self):
+        return len(self.active_matches) > 0
+
+    def launch_passive(self, plaintext):
+        logging.debug("Launching passive rules for {}".format(self.document.name))
+
+        for heuristic in self.document.passive_rules:
+            if re.search(heuristic, plaintext):
                 self.passive_matches.append(heuristic)
 
-    def launch_active(self):
-        logging.debug("Launching active rules for {}".format(self.info.name))
-        for rule in self.active_rules:
-            plaintext = str(request(self.scan.target + rule['path'],
-                                    self.scan.user_agent,
-                                    self.scan.proxy))
+        if self.passive_match():
+            logging.info("Passive match for {} ({})".format(red(self.document.name), self.document.website))
+            logging.info("Resources: {}".format(self.document.resources))
+            for m in self.passive_matches:
+                logging.info("  ✓ {}".format(bold(m)))
 
+        return self.passive_match()
+
+    def launch_active(self, curl_client):
+        logging.debug("Launching active rules for {}".format(self.document.name))
+        for rule in self.document.active_rules:
+            plaintext = str(curl_client.request(self.target + rule['path']))
             matches = re.search(rule['regex'], plaintext)
 
             # Pattern matched
@@ -50,18 +53,4 @@ class Ruleset():
                         else:
                             logging.info("Extracted data : {}".format(match))
 
-
-    def unpack_documents(self, documents):
-        logging.debug('Unpacking YAML documents')
-        for document in documents:
-            # Extract rule information
-            if type(document) is Info:
-                self.info = document
-
-            # Extract passive rules
-            if type(document) is Passive:
-                self.passive_rules = document
-
-            # Extract active rules
-            if type(document) is Active:
-                self.active_rules = document
+        return self.active_match()

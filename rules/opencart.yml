@@ -1,8 +1,7 @@
---- !Info
+--- !Document
 name: OpenCart
 website: https://www.opencart.com/
-resources: 
---- !Passive
-regexes:
-- /catalog/view/theme
-- /index.php\?route=account/login
+resources:
+passive_rules:
+  - /catalog/view/theme
+  - /index.php\?route=account/login

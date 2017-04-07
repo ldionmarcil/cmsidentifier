@@ -3,10 +3,12 @@ import os
 import pdb
 import argparse
 
-from .scan import *
+from .scan import Scan
+from .network import CurlClient
 from .version import __version__
 
 def run():
+    root_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', '--url',
                         metavar="URL", required=True,
@@ -22,7 +24,7 @@ def run():
                         help="Trigger active rules if passive rules are a match")
     parser.add_argument('-r', '--rules',
                         nargs=1, type=str, metavar="DIRECTORY",
-                        default=os.path.dirname(os.path.realpath(__file__)) + "/../rules",
+                        default=(root_path + "/rules/*.yml"),
                         help="The path to the directory where rules reside")
     parser.add_argument('-U', '--user-agent',
                         type=str, metavar="USER AGENT",
@@ -37,18 +39,31 @@ def run():
     parser.add_argument('-V', '--verbose',
                         action="store_true",
                         help="Enable debugging output")
+    parser.add_argument('-j', '--jobs',
+                        type=int, metavar="JOBS",
+                        default=1,
+                        help="Maximum number of parallel scan jobs. The default is 1.")
+    parser.add_argument('-l', '--layout',
+                        nargs=1, type=str, metavar="URL",
+                        help="The path of the layout used to generate the reports",
+                        default=(root_path + "/layouts/default.txt"))
 
     arguments = parser.parse_args()
 
     logging.basicConfig(format="[%(asctime)s %(levelname)-5s] %(message)s",
                         level=logging.DEBUG if arguments.verbose else logging.INFO)
 
-    scan = Scan(target=arguments.url,
-                rules=arguments.rules,
-                user_agent=arguments.user_agent,
-                proxy=arguments.proxy,
-                active=arguments.active)
-    scan.process_rules()
+
+    curl_client = CurlClient(user_agent=arguments.user_agent,
+                             proxy=arguments.proxy)
+
+    scan = Scan(targets=arguments.url,
+                rules_dir=arguments.rules,
+                curl_client=curl_client,
+                active=arguments.active,
+                jobs=arguments.jobs)
+
+    scan.scan()
     scan.generate_report()
 
 if __name__ == '__main__':

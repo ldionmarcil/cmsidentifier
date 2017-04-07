@@ -1,8 +1,6 @@
---- !Info
+--- !Document
 name: Oracle Portal
 website: https://www.oracle.com/middleware/webcenter/portal/index.html
-resources: 
---- !Passive
-regexes:
-- /pls/portal/
-
+resources:
+passive_rules:
+  - /pls/portal/

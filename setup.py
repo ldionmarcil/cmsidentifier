@@ -13,8 +13,11 @@ setup(
     install_requires=[
         'PyYAML>=3.12',
         'pycurl>=7.43',
+        'Jinja2>=2.9',
+        'requests>=2.13'
     ],
     tests_require=[
+        'responses>=0.5',
         'testfixtures>=4.13',
     ]
 )
