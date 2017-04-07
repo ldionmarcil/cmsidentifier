@@ -53,7 +53,7 @@ class Scan():
             return
 
         if not destination:
-            logging.info("Use the `-o PATH` option to generate a report")
+            logging.debug("Use the `-o PATH` option to generate a report")
             return
 
         report = Report.from_file(layout, self)

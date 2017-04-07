@@ -2,6 +2,7 @@ import logging
 import fileinput
 import os
 import pdb
+import sys
 import argparse
 
 from .scan import Scan
@@ -14,9 +15,9 @@ def run():
     parser.add_argument('-u', '--url',
                         metavar="URL",
                         help="Root URL to scan")
-    parser.add_argument('-i', '--inplace',
-                        action='store_true',
-                        help="Specifies a list of targets from a file")
+    parser.add_argument('-i', '--input',
+                        type = argparse.FileType('r'),
+                        default = '-')
     parser.add_argument('-o', '--output',
                         type=argparse.FileType('w'),
                         help="The path to the report to produce, if desired")
@@ -58,13 +59,14 @@ def run():
 
     curl_client = CurlClient(user_agent=arguments.user_agent, proxy=arguments.proxy)
 
-    # multiple_urls = None
-    multiple_urls = [line.rstrip() for line in fileinput.input(arguments.inplace)]
-    targets = arguments.url or multiple_urls
-
-    if not targets:
+    targets = None
+    if arguments.url:
+        targets = arguments.url
+    elif sys.stdin.isatty():
         parser.print_help();
         return
+    else:
+        targets = [line.rstrip() for line in arguments.input.readlines()]
 
     scan = Scan(targets=targets,
                 rules_dir=arguments.rules,
