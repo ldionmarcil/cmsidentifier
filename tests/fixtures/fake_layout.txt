@@ -1,1 +1,1 @@
-allo: {{ scan.something() }}
+allo: {{ targets }}
