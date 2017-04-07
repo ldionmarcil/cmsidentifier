@@ -12,3 +12,6 @@ active_rules:
   - path: /license.txt
     desc: Possible update/setup date
     regex: (Copyright [0-9\-]+ by the contributors)
+  - path: /Search-Replace-DB-master/
+    desc: searchreplacedb2 database take-over
+    regex: interconnect
