@@ -15,6 +15,27 @@
       body {
         padding-top: 70px;
       }
+
+      .summary {
+        padding-top: 1em;
+        padding-bottom: 1em;
+        margin-bottom: 0.5em;
+        color: #3b3c40;
+        border-left: 5px solid #558abb;
+        background-color: rgb(221,228,233);
+      }
+        .summary h1, h2, h3 {
+          color: #217AC0;
+        }
+
+      .ruleset {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        margin-bottom: 0.5em;
+        color: #3b3c40;
+        border-left: 5px solid rgb(230,230,230);
+        background-color: rgb(245,245,245);
+      }
     </style>
   </head>
   <body>
@@ -38,21 +59,60 @@
     </nav>
     <div class="container-fluid">
       <div class="row">
-        <div class="alert alert-success col-10 offset-1" role="alert">
-          <h4 class="alert-heading">Succès!</h4>
-          <p>La détection du CMS a été une réussite!</p>
-          <p class="mb-0"></p>
-        </div>
-
-        <div class="alert alert-danger col-10 offset-1" role="alert">
-          <h4 class="alert-heading">Échec.</h4>
-          <p>L'analyse a été infructueuse. Aucun CMS n'a été détecté.</p>
-          <p class="mb-0"></p>
-        </div>
+        {% if succeded_rulesets|length is greaterthan 0 %}
+          <div class="alert alert-success col-10 offset-1" role="alert">
+            <h4 class="alert-heading">Succès!</h4>
+            <p>La détection du CMS a été une réussite!</p>
+          </div>
+        {% else %}
+          <div class="alert alert-danger col-10 offset-1" role="alert">
+            <h4 class="alert-heading">Échec.</h4>
+            <p>L'analyse a été infructueuse. Aucun CMS n'a été détecté.</p>
+          </div>
+        {% endif %}
       </div>
       <div class="row">
-        <main class="col-12 pt-3">
+        <main class="col-10 offset-1 summary">
+          <h3>Sommaire</h3>
+          <ul>
+            <!-- <li>Temps d'exécution:</li>
+            <li>Nombre de requête externe réalisées:</li> -->
+            <li>{{ targets|length }} cibles analysés.</li>
+            <li>{{ succeded_rulesets|length }} règles fructueuses.</li>
+          </ul>
+
+          <h3>Information sur le client HTTP</h3>
+          <ul>
+            <li>Proxy: {{ curl_client.proxy or "N/A" }}</li>
+            <li>User-Agent: {{ curl_client.user_agent or "N/A" }}</li>
+          </ul>
         </main>
+      </div>
+      <div class="row">
+        {% set offseter = cycler('offset-1', '') %}
+        {% for target, ruleset in succeded_rulesets %}
+          <main class="col-5 {{ offseter.next() }} ruleset">
+            <h3>Cible: <a href="{{target}}">{{ target }}</a></h3>
+            <p>
+              <a href="{{ ruleset.document.website }}">CMS: {{ ruleset.document.name }}</a><br>
+              {% if ruleset.document.resources %}
+                <small><a href="{{ ruleset.document.resources }}">Resources additionnelles</a></small><br>
+              {% endif %}
+              Match passif(s): {{ ruleset.passive_matches|length }}<br>
+              <ul>
+                {% for passive in ruleset.passive_matches %}
+                  <li>✓ {{ passive }}</li>
+                {% endfor %}
+              </ul>
+              Match actif(s): {{ ruleset.active_matches|length }}<br>
+              <ul>
+                {% for active in ruleset.active_matches %}
+                  <li>✓ {{ active.path }} -- {{ active.desc}}</li>
+                {% endfor %}
+              </ul>
+            </p>
+          </main>
+        {% endfor %}
       </div>
     </div>
 

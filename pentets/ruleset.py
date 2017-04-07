@@ -40,6 +40,7 @@ class Ruleset():
 
             # Pattern matched
             if matches:
+                self.active_matches.append(rule)
                 logging.info("{} match {}".format(bold("Active"), rule['path']))
                 if 'info' in rule:
                     logging.info(" - {}".format(rule['info']))
