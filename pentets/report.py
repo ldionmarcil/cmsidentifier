@@ -12,7 +12,11 @@ class Report():
 
     def render(self):
         template = Template(self.layout)
-        return template.render(scan = self.scan)
+        return template.render(
+          targets=self.scan.targets,
+          curl_client=self.scan.curl_client,
+          succeded_rulesets=self.scan.succeded_rulesets,
+        )
 
     def dump(self, io):
         output = self.render()

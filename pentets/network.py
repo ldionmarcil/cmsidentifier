@@ -22,7 +22,7 @@ class CurlClient():
 
         response = requests.get(url,
                                 allow_redirects=True,
-                                timeout=1,
+                                timeout=3,
                                 proxies=proxies,
                                 headers=headers)
 

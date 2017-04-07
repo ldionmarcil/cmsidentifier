@@ -1,4 +1,5 @@
 import logging
+import fileinput
 import os
 import pdb
 import argparse
@@ -11,13 +12,13 @@ def run():
     root_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', '--url',
-                        metavar="URL", required=True,
+                        metavar="URL",
                         help="Root URL to scan")
-    parser.add_argument('-f', '--cms-family',
-                        metavar="FAMILY",
-                        help="The family of the CMS to scan for")
+    parser.add_argument('-i', '--inplace',
+                        action='store_true',
+                        help="Specifies a list of targets from a file")
     parser.add_argument('-o', '--output',
-                        nargs=1, type=str, metavar="URL",
+                        type=argparse.FileType('w'),
                         help="The path to the report to produce, if desired")
     parser.add_argument('-a', '--active',
                         action="store_true",
@@ -46,25 +47,33 @@ def run():
     parser.add_argument('-l', '--layout',
                         nargs=1, type=str, metavar="URL",
                         help="The path of the layout used to generate the reports",
-                        default=(root_path + "/layouts/default.txt"))
+                        default=(root_path + "/layouts/default.html"))
 
     arguments = parser.parse_args()
+
 
     logging.basicConfig(format="[%(asctime)s %(levelname)-5s] %(message)s",
                         level=logging.DEBUG if arguments.verbose else logging.INFO)
 
 
-    curl_client = CurlClient(user_agent=arguments.user_agent,
-                             proxy=arguments.proxy)
+    curl_client = CurlClient(user_agent=arguments.user_agent, proxy=arguments.proxy)
 
-    scan = Scan(targets=arguments.url,
+    # multiple_urls = None
+    multiple_urls = [line.rstrip() for line in fileinput.input(arguments.inplace)]
+    targets = arguments.url or multiple_urls
+
+    if not targets:
+        parser.print_help();
+        return
+
+    scan = Scan(targets=targets,
                 rules_dir=arguments.rules,
                 curl_client=curl_client,
                 active=arguments.active,
                 jobs=arguments.jobs)
 
     scan.scan()
-    scan.generate_report()
+    scan.generate_report(arguments.layout, arguments.output)
 
 if __name__ == '__main__':
     run()

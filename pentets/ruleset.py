@@ -25,10 +25,10 @@ class Ruleset():
                 self.passive_matches.append(heuristic)
 
         if self.passive_match():
-            logging.info("Passive match for {} ({})".format(red(self.document.name), self.document.website))
+            logging.info("{} match for {} ({})".format(bold("Passive"), red(self.document.name), self.document.website))
             logging.info("Resources: {}".format(self.document.resources))
             for m in self.passive_matches:
-                logging.info("  ✓ {}".format(bold(m)))
+                logging.info(bold("  ✓ -- {}".format(m)))
 
         return self.passive_match()
 
@@ -40,7 +40,7 @@ class Ruleset():
 
             # Pattern matched
             if matches:
-                logging.info("Active {} match".format(rule['path']))
+                logging.info("{} match {}".format(bold("Active"), rule['path']))
                 if 'info' in rule:
                     logging.info(" - {}".format(rule['info']))
                 # if group matching: data extraction

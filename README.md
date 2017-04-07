@@ -14,6 +14,19 @@ python3 -m pentets -u https://herby.tv/
 python3 -m pentets -u http://phoenix.etsmtl.ca/ -a
 ```
 
+
+## DEMO
+
+```
+# running the test suite
+python3 setup.py test
+
+# batch processing
+cat demo.txt > python3 -m pentets -a -V -o example.html
+```
+
+
+
 ## Manual testing examples
 
 ```sh
