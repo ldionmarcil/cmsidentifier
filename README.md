@@ -1,4 +1,5 @@
-# LOG515 - PentÉTS
+# CMS Identifier
+Identifies various CMS/DAM systems with passive and active rules.
 
 ## Installation
 
